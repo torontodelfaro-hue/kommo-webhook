@@ -17,7 +17,7 @@ phone = phone.replace(/\D/g, "");
       .digest('hex');
 
     const response = await fetch(
-      'https://graph.facebook.com/v19.0/1043319464664254/events?access_token=EAARmicyII3gBQrsZCGePXxusolNKcv2jwzE52CHy7JwTsarB1sENIvpZC77crC6ntXZBwXQE3MgMetYWIX1cVoXsbP7mnHDSXeVQCBOFDBRTZAvK59TiiDDc3g7YzVdSIMoo6cehctS6WmGGtyDlQPNTR0s39yAzy5CPNJ3kBRleEBVHCQqZCT61BhQ8we31BUgZDZD',
+      'https://graph.facebook.com/v19.0/1043319464664254/events?1043319464664254=EAARmicyII3gBQrsZCGePXxusolNKcv2jwzE52CHy7JwTsarB1sENIvpZC77crC6ntXZBwXQE3MgMetYWIX1cVoXsbP7mnHDSXeVQCBOFDBRTZAvK59TiiDDc3g7YzVdSIMoo6cehctS6WmGGtyDlQPNTR0s39yAzy5CPNJ3kBRleEBVHCQqZCT61BhQ8we31BUgZDZD',
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
