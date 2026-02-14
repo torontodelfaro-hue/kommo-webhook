@@ -1,6 +1,6 @@
 const crypto = require('crypto');
 
-export default async function handler(req, res) {
+module.exports = async (req, res) => {
   try {
     let phone = req.body?.contacts?.[0]?.phone || '';
 
@@ -45,4 +45,4 @@ export default async function handler(req, res) {
     console.error(error);
     return res.status(500).json({ error: error.message });
   }
-}
+};
