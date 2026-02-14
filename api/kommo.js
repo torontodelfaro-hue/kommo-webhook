@@ -2,7 +2,8 @@ const crypto = require('crypto');
 
 module.exports = async (req, res) => {
   try {
-    let phone = req.body?.contacts?.[0]?.phone || '';
+    let phone = req.body.contacts?.[0]?.phone || "";
+phone = phone.replace(/\D/g, "");
 
     phone = phone.replace(/\D/g, '');
 
