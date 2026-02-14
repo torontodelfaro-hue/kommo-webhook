@@ -1,8 +1,10 @@
-import crypto from 'crypto';
+const crypto = require('crypto');
 
 export default async function handler(req, res) {
   try {
-    const phone = req.body?.contacts?.[0]?.phone || '';
+    let phone = req.body?.contacts?.[0]?.phone || '';
+
+    phone = phone.replace(/\D/g, '');
 
     if (!phone) {
       return res.status(200).json({ message: "No phone provided" });
@@ -13,32 +15,34 @@ export default async function handler(req, res) {
       .update(phone)
       .digest('hex');
 
-    await fetch(
-      `https://graph.facebook.com/v19.0/${process.env.1043319464664254}/events?access_token=${process.env.EAARmicyII3gBQrsZCGePXxusolNKcv2jwzE52CHy7JwTsarB1sENIvpZC77crC6ntXZBwXQE3MgMetYWIX1cVoXsbP7mnHDSXeVQCBOFDBRTZAvK59TiiDDc3g7YzVdSIMoo6cehctS6WmGGtyDlQPNTR0s39yAzy5CPNJ3kBRleEBVHCQqZCT61BhQ8we31BUgZDZD}`,
+    const response = await fetch(
+      'https://graph.facebook.com/v19.0/1043319464664254/events?access_token=EAARmicyII3gBQrsZCGePXxusolNKcv2jwzE52CHy7JwTsarB1sENIvpZC77crC6ntXZBwXQE3MgMetYWIX1cVoXsbP7mnHDSXeVQCBOFDBRTZAvK59TiiDDc3g7YzVdSIMoo6cehctS6WmGGtyDlQPNTR0s39yAzy5CPNJ3kBRleEBVHCQqZCT61BhQ8we31BUgZDZD',
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
+          test_event_code: "TEST49976",
           data: [
             {
-              event_name: 'Purchase',
+              event_name: "Purchase",
               event_time: Math.floor(Date.now() / 1000),
-              action_source: 'system_generated',
+              action_source: "system_generated",
               user_data: {
-                ph: [hashedPhone],
-              },
-              custom_data: {
-                currency: 'USD',
-                value: 1,
-              },
-            },
-          ],
-        }),
+                ph: [hashedPhone]
+              }
+            }
+          ]
+        })
       }
     );
 
-    return res.status(200).json({ success: true });
+    const fbData = await response.json();
+    console.log("Facebook response:", fbData);
+
+    return res.status(200).json({ success: true, fbData });
+
   } catch (error) {
+    console.error(error);
     return res.status(500).json({ error: error.message });
   }
 }
